@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import Card from "./components/Card";
 
 function App({ cards }) {
   const [cardData, setCardData] = useState(cards);
@@ -7,13 +8,7 @@ function App({ cards }) {
     <div className="App">
       <div>
         {cardData.map((card) => {
-          return (
-            <div key={card.id}>
-              <p>{card.id}</p>
-              <p>{card.company}</p>
-              <p>{card.description}</p>
-            </div>
-          );
+          return <Card card={card} />;
         })}
       </div>
     </div>
