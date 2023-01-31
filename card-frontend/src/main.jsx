@@ -9,7 +9,7 @@ const cards = [
     company: "Topps",
     description: "Curry rookie Card",
     notes: "Autographed",
-    submissionType: "Super Express",
+    service: "Super Express",
     status: "Pending",
   },
   {
@@ -17,7 +17,7 @@ const cards = [
     company: "Fleer",
     description: "Durant rookie Card",
     notes: null,
-    submissionType: "Express",
+    service: "Express",
     status: "Pending",
   },
   {
@@ -25,7 +25,7 @@ const cards = [
     company: "Panini",
     description: "Doncic rookie Card",
     notes: "Autographed",
-    submissionType: "Walk Through",
+    service: "Walk Through",
     status: "Pending",
   },
 ];

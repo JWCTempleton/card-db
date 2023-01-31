@@ -10,13 +10,13 @@ const styles = {
 };
 
 const Card = ({ card }) => {
-  console.log(("card", card));
   return (
-    <div style={styles} key={card.id}>
+    <div style={styles}>
       <p>ID: {card.id}</p>
       <p>Company: {card.company}</p>
       <p>Description: {card.description}</p>
-      <p>Submission: {card.submissionType}</p>
+      {card.notes && <p>Notes: {card.notes}</p>}
+      <p>Service: {card.service}</p>
       <p>Status: {card.status}</p>
     </div>
   );

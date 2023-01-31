@@ -32,13 +32,16 @@ function App({ cards }) {
       status: "Pending",
       id: cardData.length + 1,
     };
+    setCardData(cardData.concat(newCardObject));
   };
+
   const handleNewCard = (event) => {
     const { name, value } = event.target;
     setNewCard((prevCard) => {
       return { ...prevCard, [name]: value };
     });
   };
+  console.log("new card", newCard);
 
   return (
     <div className="App">
@@ -69,17 +72,17 @@ function App({ cards }) {
           name="service"
           onChange={handleNewCard}
         >
-          <option value="walk-through">Walk Through</option>
-          <option value="super-express">Super-Express</option>
-          <option value="express">Express</option>
-          <option value="regular">Regular</option>
-          <option value="value">Value</option>
+          <option value="Walk-through">Walk Through</option>
+          <option value="Super-Express">Super-Express</option>
+          <option value="Express">Express</option>
+          <option value="Regular">Regular</option>
+          <option value="Value">Value</option>
         </select>
         <button type="submit">Submit</button>
       </form>
       <div>
         {cardData.map((card) => {
-          return <Card card={card} />;
+          return <Card card={card} key={card.id} />;
         })}
       </div>
     </div>
