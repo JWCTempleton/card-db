@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./components/Card";
+import axios from "axios";
 
 const styles = {
   display: "flex",
@@ -14,13 +15,19 @@ const styles = {
 };
 
 function App({ cards }) {
-  const [cardData, setCardData] = useState(cards);
+  const [cardData, setCardData] = useState([]);
   const [newCard, setNewCard] = useState({
     company: "",
     description: "",
     notes: "",
     service: "",
   });
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/cards").then((response) => {
+      setCardData(response.data);
+    });
+  }, []);
 
   const addNewCard = (event) => {
     event.preventDefault();
@@ -47,7 +54,6 @@ function App({ cards }) {
       return { ...prevCard, [name]: value };
     });
   };
-  console.log("new card", newCard);
 
   return (
     <div className="App">
