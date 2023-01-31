@@ -1,14 +1,20 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0);
-
+function App({ cards }) {
+  console.log("cards are", cards);
   return (
     <div className="App">
       <div>
-        <h1>This is working</h1>
+        {cards.map((card) => {
+          return (
+            <div>
+              <p>{card.id}</p>
+              <p>{card.company}</p>
+              <p>{card.description}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
