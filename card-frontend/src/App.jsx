@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./components/Card";
-import axios from "axios";
+import cardService from "./services/cards";
 
 const styles = {
   display: "flex",
@@ -24,7 +24,7 @@ function App({ cards }) {
   });
 
   useEffect(() => {
-    axios.get("http://localhost:3001/cards").then((response) => {
+    cardService.getAll().then((response) => {
       setCardData(response.data);
     });
   }, []);
@@ -34,12 +34,15 @@ function App({ cards }) {
     const newCardObject = {
       company: newCard.company,
       description: newCard.description,
-      notes: newCard.notes,
+      notes: newCard.notes || null,
       service: newCard.service,
       status: "Pending",
       id: cardData.length + 1,
     };
-    setCardData(cardData.concat(newCardObject));
+
+    cardService.create(newCardObject).then((response) => {
+      setCardData(cardData.concat(response.data));
+    });
     setNewCard({
       company: "",
       description: "",
