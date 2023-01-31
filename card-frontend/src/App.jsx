@@ -33,6 +33,12 @@ function App({ cards }) {
       id: cardData.length + 1,
     };
     setCardData(cardData.concat(newCardObject));
+    setNewCard({
+      company: "",
+      description: "",
+      notes: "",
+      service: "",
+    });
   };
 
   const handleNewCard = (event) => {
