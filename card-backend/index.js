@@ -56,9 +56,28 @@ app.get("/api/cards/:id", (request, response) => {
   }
 });
 
+const generateId = () => {
+  const maxId = cards.length > 0 ? Math.max(...cards.map((n) => n.id)) : 0;
+  return maxId + 1;
+};
+
 app.post("/api/cards", (request, response) => {
-  const card = request.body;
-  console.log(card);
+  if (!body.company || !body.description) {
+    return response.status(400).json({
+      error: "company or description missing",
+    });
+  }
+  const card = {
+    id: generateId(),
+    submitted: new Date(),
+    company: body.company,
+    description: body.description,
+    notes: body.notes || null,
+    service: body.service,
+    status: body.status,
+  };
+
+  cards = cards.concat(card);
   response.json(card);
 });
 
