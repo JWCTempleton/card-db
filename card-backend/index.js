@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+app.use(express.json());
+
 let cards = [
   {
     id: 1,
@@ -52,6 +54,12 @@ app.get("/api/cards/:id", (request, response) => {
   } else {
     response.status(404).end();
   }
+});
+
+app.post("/api/cards", (request, response) => {
+  const card = request.body;
+  console.log(card);
+  response.json(card);
 });
 
 app.delete("/api/cards/:id", (request, response) => {
