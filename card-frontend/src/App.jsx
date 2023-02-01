@@ -25,7 +25,7 @@ function App({ cards }) {
 
   useEffect(() => {
     cardService.getAll().then((response) => {
-      setCardData(response.data);
+      setCardData(response);
     });
   }, []);
 
@@ -41,7 +41,7 @@ function App({ cards }) {
     };
 
     cardService.create(newCardObject).then((response) => {
-      setCardData(cardData.concat(response.data));
+      setCardData(cardData.concat(response));
     });
     setNewCard({
       company: "",
@@ -87,6 +87,7 @@ function App({ cards }) {
           name="service"
           onChange={handleNewCard}
         >
+          <option>--Select a service--</option>
           <option value="Walk-through">Walk Through</option>
           <option value="Super-Express">Super-Express</option>
           <option value="Express">Express</option>
