@@ -44,6 +44,16 @@ app.get("/api/cards", (request, response) => {
   response.json(cards);
 });
 
+app.get("/api/cards/:id", (request, response) => {
+  const id = Number(request.params.id);
+  const card = cards.find((card) => card.id === id);
+  if (card) {
+    response.json(card);
+  } else {
+    response.status(404).end();
+  }
+});
+
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
