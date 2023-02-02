@@ -62,7 +62,7 @@ app.get("/api/cards", (request, response) => {
   });
 });
 
-app.get("/api/cards/:id", (request, response) => {
+app.get("/api/cards/:id", (request, response, next) => {
   Card.findById(request.params.id)
     .then((card) => {
       if (card) {
@@ -71,10 +71,7 @@ app.get("/api/cards/:id", (request, response) => {
         response.status(404).end();
       }
     })
-    .catch((error) => {
-      console.log(error);
-      response.status(400).send({ error: "malformatted id" });
-    });
+    .catch((error) => next(error));
 });
 
 // const generateId = () => {
@@ -115,6 +112,19 @@ const unknownEndpoint = (request, response) => {
 };
 
 app.use(unknownEndpoint);
+
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message);
+
+  if (error.name === "CastError") {
+    return response.status(400).send({ error: "malformatted id" });
+  }
+
+  next(error);
+};
+
+// this has to be the last loaded middleware.
+app.use(errorHandler);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
