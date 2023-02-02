@@ -4,9 +4,9 @@ const app = express();
 const cors = require("cors");
 const Card = require("./models/card");
 
+app.use(express.static("dist"));
 app.use(express.json());
 app.use(cors());
-app.use(express.static("dist"));
 
 // let cards = [
 //   {
