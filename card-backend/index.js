@@ -87,7 +87,7 @@ app.post("/api/cards", (request, response) => {
     });
   }
   const card = new Card({
-    submitted: new Date(),
+    submitted: Date(),
     company: body.company,
     description: body.description,
     notes: body.notes || null,
@@ -101,7 +101,7 @@ app.post("/api/cards", (request, response) => {
 });
 
 app.delete("/api/cards/:id", (request, response) => {
-  Note.findByIdAndRemove(request.params.id)
+  Card.findByIdAndRemove(request.params.id)
     .then((result) => {
       response.status(204).end();
     })

@@ -28,7 +28,7 @@ const cardSchema = new mongoose.Schema({
   },
   notes: String || null,
   service: String,
-  received: Date,
+  submitted: Date,
   status: String,
 });
 
