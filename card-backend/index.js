@@ -101,10 +101,11 @@ app.post("/api/cards", (request, response) => {
 });
 
 app.delete("/api/cards/:id", (request, response) => {
-  const id = Number(request.params.id);
-  cards = cards.filter((card) => card.id !== id);
-
-  response.status(204).end();
+  Note.findByIdAndRemove(request.params.id)
+    .then((result) => {
+      response.status(204).end();
+    })
+    .catch((error) => next(error));
 });
 
 const unknownEndpoint = (request, response) => {
