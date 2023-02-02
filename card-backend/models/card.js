@@ -16,9 +16,17 @@ mongoose
   });
 
 const cardSchema = new mongoose.Schema({
-  company: String,
-  description: String,
-  notes: String,
+  company: {
+    type: String,
+    minLength: 3,
+    required: true,
+  },
+  description: {
+    type: String,
+    minLength: 3,
+    required: true,
+  },
+  notes: String || null,
   service: String,
   received: Date,
   status: String,
