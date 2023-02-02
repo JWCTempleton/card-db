@@ -79,7 +79,7 @@ app.get("/api/cards/:id", (request, response, next) => {
 //   return maxId + 1;
 // };
 
-app.post("/api/cards", (request, response) => {
+app.post("/api/cards", (request, response, next) => {
   const body = request.body;
   if (!body.company || !body.description) {
     return response.status(400).json({
@@ -95,9 +95,12 @@ app.post("/api/cards", (request, response) => {
     status: body.status,
   });
 
-  card.save().then((savedCard) => {
-    response.json(savedCard);
-  });
+  card
+    .save()
+    .then((savedCard) => {
+      response.json(savedCard);
+    })
+    .catch((error) => next(error));
 });
 
 app.delete("/api/cards/:id", (request, response) => {
