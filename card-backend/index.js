@@ -1,9 +1,9 @@
-require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const Card = require("./models/card");
 const logger = require("./utils/logger");
+const config = require("./utils/config");
 
 app.use(express.static("dist"));
 app.use(express.json());
@@ -133,7 +133,6 @@ const errorHandler = (error, request, response, next) => {
 // this has to be the last loaded middleware.
 app.use(errorHandler);
 
-const PORT = process.env.PORT;
 app.listen(PORT, () => {
-  logger.info(`Server running on port ${PORT}`);
+  logger.info(`Server running on port ${config.PORT}`);
 });
