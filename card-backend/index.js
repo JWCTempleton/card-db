@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const Card = require("./models/card");
+const logger = require("./utils/logger");
 
 app.use(express.static("dist"));
 app.use(express.json());
@@ -134,5 +135,5 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  logger.info(`Server running on port ${PORT}`);
 });
