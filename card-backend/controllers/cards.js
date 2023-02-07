@@ -1,10 +1,9 @@
 const cardsRouter = require("express").Router();
 const Card = require("../models/card");
 
-cardsRouter.get("/", (request, response) => {
-  Card.find({}).then((cards) => {
-    response.json(cards);
-  });
+cardsRouter.get("/", async (request, response) => {
+  const cards = await Card.find({});
+  response.json(cards);
 });
 
 cardsRouter.get("/:id", (request, response, next) => {
