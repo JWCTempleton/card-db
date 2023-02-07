@@ -4,9 +4,9 @@
   "description": "Express server backend for card submissions",
   "main": "index.js",
   "scripts": {
-    "test": "jest --verbose",
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "test": "NODE_ENV=test jest --verbose --runInBand",
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
     "build:ui": "rm -rf dist && cd ../card-frontend/ && npm run build && cp -r dist ../card-backend",
     "deploy": "fly deploy",
     "deploy:full": "npm run build:ui && npm run deploy",
