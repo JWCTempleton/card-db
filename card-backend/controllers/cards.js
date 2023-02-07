@@ -38,7 +38,7 @@ cardsRouter.post("/", (request, response, next) => {
   card
     .save()
     .then((savedCard) => {
-      response.json(savedCard);
+      response.status(201).json(savedCard);
     })
     .catch((error) => next(error));
 });

@@ -53,6 +53,29 @@ test("a specific card is contained in the returned cards", async () => {
   expect(contents).toContain("Curry Rookie Card");
 });
 
+test("A valid card can be added", async () => {
+  const newCard = {
+    company: "Fleer",
+    description: "Doncic Rookie Card",
+    notes: "Autographed",
+    service: "Express",
+    submitted: new Date(),
+    status: "Pending",
+  };
+
+  await api
+    .post("/api/cards")
+    .send(newCard)
+    .expect(201)
+    .expect("Content-Type", /application\/json/);
+
+  const response = await api.get("/api/cards");
+  const description = response.body.map((card) => card.description);
+
+  expect(response.body).toHaveLength(initialCards.length + 1);
+  expect(description).toContain("Doncic Rookie Card");
+});
+
 afterAll(async () => {
   await mongoose.connection.close();
 });
