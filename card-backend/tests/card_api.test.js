@@ -13,4 +13,4 @@ test("cards are returned as json", async () => {
 
 afterAll(async () => {
   await mongoose.connection.close();
-});
+}, 100000);
