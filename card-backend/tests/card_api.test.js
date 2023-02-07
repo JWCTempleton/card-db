@@ -76,6 +76,23 @@ test("A valid card can be added", async () => {
   expect(description).toContain("Doncic Rookie Card");
 });
 
+test("A car without a description is not added", async () => {
+  const newCard = {
+    company: "Fleer",
+    description: null,
+    notes: "Autographed",
+    service: "Express",
+    submitted: new Date(),
+    status: "Pending",
+  };
+
+  await api.post("/api/cards").send(newCard).expect(400);
+
+  const response = await api.get("/api/cards");
+
+  expect(response.body).toHaveLength(initialCards.length);
+});
+
 afterAll(async () => {
   await mongoose.connection.close();
 });
