@@ -34,10 +34,13 @@ cardsRouter.post("/", async (request, response, next) => {
     service: body.service,
     status: body.status,
   });
+  try {
+    const savedCard = await card.save();
 
-  const savedCard = await card.save();
-
-  response.status(201).json(savedCard);
+    response.status(201).json(savedCard);
+  } catch (exception) {
+    next(exception);
+  }
 });
 
 cardsRouter.delete("/:id", (request, response) => {
