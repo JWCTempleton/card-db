@@ -44,12 +44,13 @@ cardsRouter.post("/", async (request, response, next) => {
   }
 });
 
-cardsRouter.delete("/:id", (request, response) => {
-  Card.findByIdAndRemove(request.params.id)
-    .then(() => {
-      response.status(204).end();
-    })
-    .catch((error) => next(error));
+cardsRouter.delete("/:id", async (request, response) => {
+  try {
+    await Card.findByIdAndRemove(request.params.id);
+    response.status(204).end();
+  } catch (exception) {
+    next(exception);
+  }
 });
 
 module.exports = cardsRouter;
