@@ -89,6 +89,21 @@ test("A specific card can be viewed", async () => {
   expect(resultCard.body).toEqual(cardToView);
 });
 
+test("A card can be deleted", async () => {
+  const cardsAtStart = await helper.cardsInDb();
+  const cardToDelete = cardsAtStart[0];
+
+  await api.delete(`/api/cards/${cardToDelete.id}`).expect(204);
+
+  const cardsAtEnd = await helper.cardsInDb();
+
+  expect(cardsAtEnd).toHaveLength(helper.initialCards.length - 1);
+
+  const descriptions = cardsAtEnd.map((card) => card.description);
+
+  expect(descriptions).not.toContain(cardToDelete.description);
+});
+
 afterAll(async () => {
   await mongoose.connection.close();
 });
