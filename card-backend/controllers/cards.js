@@ -18,7 +18,7 @@ cardsRouter.get("/:id", (request, response, next) => {
     .catch((error) => next(error));
 });
 
-cardsRouter.post("/", (request, response, next) => {
+cardsRouter.post("/", async (request, response, next) => {
   const body = request.body;
   //no longer required
   // if (!body.company || !body.description) {
@@ -35,12 +35,9 @@ cardsRouter.post("/", (request, response, next) => {
     status: body.status,
   });
 
-  card
-    .save()
-    .then((savedCard) => {
-      response.status(201).json(savedCard);
-    })
-    .catch((error) => next(error));
+  const savedCard = await card.save();
+
+  response.status(201).json(savedCard);
 });
 
 cardsRouter.delete("/:id", (request, response) => {
