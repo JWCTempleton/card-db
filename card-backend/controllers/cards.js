@@ -6,16 +6,17 @@ cardsRouter.get("/", async (request, response) => {
   response.json(cards);
 });
 
-cardsRouter.get("/:id", (request, response, next) => {
-  Card.findById(request.params.id)
-    .then((card) => {
-      if (card) {
-        response.json(card);
-      } else {
-        response.status(404).end();
-      }
-    })
-    .catch((error) => next(error));
+cardsRouter.get("/:id", async (request, response, next) => {
+  try {
+    const card = await Card.findById(request.params.id);
+    if (card) {
+      response.json(card);
+    } else {
+      response.status(404).end();
+    }
+  } catch (exception) {
+    next(exception);
+  }
 });
 
 cardsRouter.post("/", async (request, response, next) => {
