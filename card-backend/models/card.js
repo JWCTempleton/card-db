@@ -13,7 +13,7 @@ const cardSchema = new mongoose.Schema({
   },
   notes: String || null,
   service: String,
-  submitted: Date,
+  submitted: String,
   status: String,
 });
 

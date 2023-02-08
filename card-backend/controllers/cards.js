@@ -27,7 +27,7 @@ cardsRouter.post("/", async (request, response, next) => {
   //   });
   // }
   const card = new Card({
-    submitted: new Date(),
+    submitted: new Date().toISOString(),
     company: body.company,
     description: body.description,
     notes: body.notes || null,

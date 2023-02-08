@@ -59,7 +59,7 @@ test("A valid card can be added", async () => {
   expect(descriptions).toContain("Doncic Rookie Card");
 });
 
-test("A car without a description is not added", async () => {
+test("A card without a description is not added", async () => {
   const newCard = {
     company: "Fleer",
     description: null,
@@ -74,6 +74,19 @@ test("A car without a description is not added", async () => {
   const cardsAtEnd = await helper.cardsInDb();
 
   expect(cardsAtEnd).toHaveLength(helper.initialCards.length);
+});
+
+test("A specific card can be viewed", async () => {
+  const cardsAtStart = await helper.cardsInDb();
+
+  const cardToView = cardsAtStart[0];
+
+  const resultCard = await api
+    .get(`/api/cards/${cardToView.id}`)
+    .expect(200)
+    .expect("Content-Type", /application\/json/);
+
+  expect(resultCard.body).toEqual(cardToView);
 });
 
 afterAll(async () => {

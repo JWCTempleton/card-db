@@ -6,7 +6,7 @@ const initialCards = [
     description: "Curry Rookie Card",
     notes: "Autographed",
     service: "Walk-Through",
-    submitted: new Date(),
+    submitted: new Date().toISOString(),
     status: "Pending",
   },
   {
@@ -14,7 +14,7 @@ const initialCards = [
     description: "Durant Rookie Card",
     notes: null,
     service: "Super-Express",
-    submitted: new Date(),
+    submitted: new Date().toISOString(),
     status: "Pending",
   },
 ];
@@ -25,7 +25,7 @@ const nonExistingId = async () => {
     description: "Test Rookie Card",
     notes: "Autographed",
     service: "Walk-Through",
-    submitted: new Date(),
+    submitted: Date(),
     status: "Pending",
   });
 
