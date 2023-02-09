@@ -6,6 +6,7 @@ const cardsRouter = require("./controllers/cards");
 const middleware = require("./utils/middleware");
 const logger = require("./utils/logger");
 const mongoose = require("mongoose");
+const usersRouter = require("./controllers/users");
 
 mongoose.set("strictQuery", false);
 
@@ -25,6 +26,7 @@ app.use(express.static("dist"));
 app.use(express.json());
 app.use(middleware.requestLogger);
 app.use("/api/cards", cardsRouter);
+app.use("/api/users", usersRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);

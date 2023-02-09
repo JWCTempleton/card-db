@@ -13,8 +13,12 @@ const cardSchema = new mongoose.Schema({
   },
   notes: String || null,
   service: String,
-  submitted: String,
+  submitted: Date,
   status: String,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 cardSchema.set("toJSON", {

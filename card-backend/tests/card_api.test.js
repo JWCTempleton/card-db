@@ -2,10 +2,12 @@ const mongoose = require("mongoose");
 const supertest = require("supertest");
 const helper = require("./test_helper");
 const app = require("../app");
+const bcrypt = require("bcrypt");
 
 const api = supertest(app);
 
 const Card = require("../models/card");
+const User = require("../models/user");
 
 beforeEach(async () => {
   await Card.deleteMany({});
@@ -102,6 +104,39 @@ test("A card can be deleted", async () => {
   const descriptions = cardsAtEnd.map((card) => card.description);
 
   expect(descriptions).not.toContain(cardToDelete.description);
+});
+
+describe("when there is initially one user in the database", () => {
+  beforeEach(async () => {
+    await User.deleteMany({});
+
+    const passwordHash = await bcrypt.hash("secret", 10);
+    const user = new User({ username: "root", passwordHash });
+
+    await user.save();
+  });
+
+  test("creation succeeds with a new username", async () => {
+    const usersAtStart = await helper.usersInDb();
+
+    const newUser = {
+      username: "jtempleton",
+      name: "Jacob Templeton",
+      password: "setonsut",
+    };
+
+    await api
+      .post("/api/users")
+      .send(newUser)
+      .expect(201)
+      .expect("Content-Type", /application\/json/);
+
+    const usersAtEnd = await helper.usersInDb();
+    expect(usersAtEnd).toHaveLength(usersAtStart.length + 1);
+
+    const usernames = usersAtEnd.map((user) => user.username);
+    expect(usernames).toContaint(newUser.username);
+  });
 });
 
 afterAll(async () => {
