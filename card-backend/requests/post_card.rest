@@ -2,10 +2,10 @@ POST http://localhost:3001/api/cards HTTP/1.1
 Content-Type: application/json
 
 {
-    "id":5,
     "company": "Topps",
     "description": "Poole rookie Card",
     "notes": "Autographed",
     "service": "Super Express",
-    "status": "Pending"
+    "status": "Pending",
+    "userId":"63e57076274bac783fa9a412"
 }
