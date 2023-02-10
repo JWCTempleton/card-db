@@ -1,6 +1,7 @@
 const cardsRouter = require("express").Router();
 const Card = require("../models/card");
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
 
 cardsRouter.get("/", async (request, response) => {
   const cards = await Card.find({}).populate("user", { username: 1, name: 1 });
@@ -20,9 +21,21 @@ cardsRouter.get("/:id", async (request, response, next) => {
   }
 });
 
+const getTokenFrom = (request) => {
+  const authorization = request.get("authorization");
+  if (authorization && authorization.startsWith("Bearer ")) {
+    return authorization.replace("Bearer ", "");
+  }
+  return null;
+};
+
 cardsRouter.post("/", async (request, response, next) => {
   const body = request.body;
-  const user = await User.findById(body.userId);
+  const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET);
+  if (!decodedToken.id) {
+    return response.status(401).json({ error: "token invalid" });
+  }
+  const user = await User.findById(decodedToken.id);
   //no longer required
   // if (!body.company || !body.description) {
   //   return response.status(400).json({
