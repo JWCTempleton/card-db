@@ -3,7 +3,7 @@ const Card = require("../models/card");
 const User = require("../models/user");
 
 cardsRouter.get("/", async (request, response) => {
-  const cards = await Card.find({});
+  const cards = await Card.find({}).populate("user", { username: 1, name: 1 });
   response.json(cards);
 });
 
@@ -30,7 +30,7 @@ cardsRouter.post("/", async (request, response, next) => {
   //   });
   // }
   const card = new Card({
-    submitted: new Date().toISOString(),
+    submitted: new Date(),
     company: body.company,
     description: body.description,
     notes: body.notes || null,

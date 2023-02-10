@@ -78,18 +78,18 @@ test("A card without a description is not added", async () => {
   expect(cardsAtEnd).toHaveLength(helper.initialCards.length);
 });
 
-// test("A specific card can be viewed", async () => {
-//   const cardsAtStart = await helper.cardsInDb();
+test("A specific card can be viewed", async () => {
+  const cardsAtStart = await helper.cardsInDb();
 
-//   const cardToView = cardsAtStart[0];
+  const cardToView = cardsAtStart[0];
 
-//   const resultCard = await api
-//     .get(`/api/cards/${cardToView.id}`)
-//     .expect(200)
-//     .expect("Content-Type", /application\/json/);
+  const resultCard = await api
+    .get(`/api/cards/${cardToView.id}`)
+    .expect(200)
+    .expect("Content-Type", /application\/json/);
 
-//   expect(resultCard.body).toEqual(cardToView);
-// });
+  expect(resultCard.body).toEqual(cardToView);
+});
 
 test("A card can be deleted", async () => {
   const cardsAtStart = await helper.cardsInDb();
