@@ -1,4 +1,5 @@
 const Card = require("../models/card");
+const User = require("../models/user");
 
 const initialCards = [
   {

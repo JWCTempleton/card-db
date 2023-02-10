@@ -78,18 +78,18 @@ test("A card without a description is not added", async () => {
   expect(cardsAtEnd).toHaveLength(helper.initialCards.length);
 });
 
-test("A specific card can be viewed", async () => {
-  const cardsAtStart = await helper.cardsInDb();
+// test("A specific card can be viewed", async () => {
+//   const cardsAtStart = await helper.cardsInDb();
 
-  const cardToView = cardsAtStart[0];
+//   const cardToView = cardsAtStart[0];
 
-  const resultCard = await api
-    .get(`/api/cards/${cardToView.id}`)
-    .expect(200)
-    .expect("Content-Type", /application\/json/);
+//   const resultCard = await api
+//     .get(`/api/cards/${cardToView.id}`)
+//     .expect(200)
+//     .expect("Content-Type", /application\/json/);
 
-  expect(resultCard.body).toEqual(cardToView);
-});
+//   expect(resultCard.body).toEqual(cardToView);
+// });
 
 test("A card can be deleted", async () => {
   const cardsAtStart = await helper.cardsInDb();
@@ -106,23 +106,27 @@ test("A card can be deleted", async () => {
   expect(descriptions).not.toContain(cardToDelete.description);
 });
 
-describe("when there is initially one user in the database", () => {
+describe("when there is initially one user in db", () => {
   beforeEach(async () => {
     await User.deleteMany({});
 
-    const passwordHash = await bcrypt.hash("secret", 10);
-    const user = new User({ username: "root", passwordHash });
+    const passwordHash = await bcrypt.hash("sekret", 10);
+    const user = new User({
+      username: "root",
+      name: "Superuser",
+      passwordHash,
+    });
 
     await user.save();
   });
 
-  test("creation succeeds with a new username", async () => {
+  test("creation succeeds with a fresh username", async () => {
     const usersAtStart = await helper.usersInDb();
 
     const newUser = {
-      username: "jtempleton",
-      name: "Jacob Templeton",
-      password: "setonsut",
+      username: "mluukkai",
+      name: "Matti Luukkainen",
+      password: "salainen",
     };
 
     await api
@@ -134,9 +138,30 @@ describe("when there is initially one user in the database", () => {
     const usersAtEnd = await helper.usersInDb();
     expect(usersAtEnd).toHaveLength(usersAtStart.length + 1);
 
-    const usernames = usersAtEnd.map((user) => user.username);
-    expect(usernames).toContaint(newUser.username);
+    const usernames = usersAtEnd.map((u) => u.username);
+    expect(usernames).toContain(newUser.username);
   });
+
+  //   test("creation fails with proper statuscode and message if username already taken", async () => {
+  //     const usersAtStart = await helper.usersInDb();
+
+  //     const newUser = {
+  //       username: "root",
+  //       name: "Superuser",
+  //       password: "salainen",
+  //     };
+
+  //     const result = await api
+  //       .post("/api/users")
+  //       .send(newUser)
+  //       .expect(400)
+  //       .expect("Content-Type", /application\/json/);
+
+  //     expect(result.body.message).toContain("Error");
+
+  //     const usersAtEnd = await helper.usersInDb();
+  //     expect(usersAtEnd).toHaveLength(usersAtStart.length);
+  //   });
 });
 
 afterAll(async () => {

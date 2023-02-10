@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   },
   name: String,
   passwordHash: String,
-  notes: [
+  cards: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Card",
@@ -29,6 +29,4 @@ userSchema.set("toJSON", {
   },
 });
 
-const User = mongoose.model("User", userSchema);
-
-module.exports = User;
+module.exports = mongoose.model("User", userSchema);
