@@ -3,6 +3,14 @@ const Card = require("../models/card");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
+const getTokenFrom = (request) => {
+  const authorization = request.get("authorization");
+  if (authorization && authorization.startsWith("Bearer ")) {
+    return authorization.replace("Bearer ", "");
+  }
+  return null;
+};
+
 cardsRouter.get("/", async (request, response) => {
   const cards = await Card.find({}).populate("user", { username: 1, name: 1 });
   response.json(cards);
@@ -20,14 +28,6 @@ cardsRouter.get("/:id", async (request, response, next) => {
     next(exception);
   }
 });
-
-const getTokenFrom = (request) => {
-  const authorization = request.get("authorization");
-  if (authorization && authorization.startsWith("Bearer ")) {
-    return authorization.replace("Bearer ", "");
-  }
-  return null;
-};
 
 cardsRouter.post("/", async (request, response, next) => {
   const body = request.body;
