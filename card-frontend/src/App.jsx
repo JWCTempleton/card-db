@@ -22,6 +22,8 @@ function App({ cards }) {
     notes: "",
     service: "",
   });
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     cardService.getAll().then((response) => {
@@ -37,7 +39,6 @@ function App({ cards }) {
       notes: newCard.notes || null,
       service: newCard.service,
       status: "Pending",
-      id: cardData.length + 1,
     };
 
     cardService.create(newCardObject).then((response) => {
