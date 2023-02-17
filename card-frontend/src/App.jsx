@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./components/Card";
 import cardService from "./services/cards";
+import loginService from "./services/login";
 
 const styles = {
   display: "flex",
@@ -24,6 +25,7 @@ function App({ cards }) {
   });
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     cardService.getAll().then((response) => {
@@ -31,9 +33,19 @@ function App({ cards }) {
     });
   }, []);
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
-    console.log("logging in with", username, password);
+    try {
+      const user = await loginService.login({
+        username,
+        password,
+      });
+      setUser(user);
+      setUsername("");
+      setPassword("");
+    } catch (exception) {
+      console.log("Wrong credentials");
+    }
   };
 
   const addNewCard = (event) => {
