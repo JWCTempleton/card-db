@@ -40,6 +40,7 @@ function App({ cards }) {
         username,
         password,
       });
+      cardService.setToken(user.token);
       setUser(user);
       setUsername("");
       setPassword("");
