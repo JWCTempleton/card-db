@@ -31,6 +31,11 @@ function App({ cards }) {
     });
   }, []);
 
+  const handleLogin = (event) => {
+    event.preventDefault();
+    console.log("logging in with", username, password);
+  };
+
   const addNewCard = (event) => {
     event.preventDefault();
     const newCardObject = {
