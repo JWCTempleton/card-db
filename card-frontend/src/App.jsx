@@ -4,6 +4,7 @@ import Card from "./components/Card";
 import cardService from "./services/cards";
 import loginService from "./services/login";
 import LoginForm from "./components/LoginForm";
+import Togglable from "./components/Togglable";
 
 const styles = {
   display: "flex",
@@ -170,7 +171,7 @@ function App({ cards }) {
               Log Out
             </button>
           </div>
-          {cardForm()}
+          <Togglable buttonLabel="New Card">{cardForm()}</Togglable>
         </div>
       )}
       <div>
