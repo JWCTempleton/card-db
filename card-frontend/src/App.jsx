@@ -89,6 +89,12 @@ function App({ cards }) {
     });
   };
 
+  const handleLogOut = () => {
+    console.log("Logging Out");
+    window.localStorage.removeItem("loggedCardappUser");
+    setUser(null);
+  };
+
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <div>
@@ -159,8 +165,13 @@ function App({ cards }) {
       {!user && loginForm()}
       {user && (
         <div>
-          <p>{user.name} logged in</p>
-          {cardForm()}{" "}
+          <div>
+            <p>{user.name} logged in</p>
+            <button type="button" onClick={handleLogOut}>
+              Log Out
+            </button>
+          </div>
+          {cardForm()}
         </div>
       )}
       <div>
