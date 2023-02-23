@@ -3,6 +3,7 @@ import "./App.css";
 import Card from "./components/Card";
 import cardService from "./services/cards";
 import loginService from "./services/login";
+import LoginForm from "./components/LoginForm";
 
 const styles = {
   display: "flex",
@@ -96,31 +97,28 @@ function App({ cards }) {
     setUser(null);
   };
 
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
+  const loginForm = () => {
+    const hideWhenVisible = { display: loginVisible ? "none" : "" };
+    const showWhenVisible = { display: loginVisible ? "" : "none" };
+
+    return (
       <div>
-        {" "}
-        username{" "}
-        <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />{" "}
+        <div style={hideWhenVisible}>
+          <button onClick={() => setLoginVisible(true)}>Log In</button>
+        </div>
+        <div style={showWhenVisible}>
+          <LoginForm
+            username={username}
+            password={password}
+            handleUsernameChange={({ target }) => setUsername(target.value)}
+            handlePasswordChange={({ target }) => setPassword(target.value)}
+            handleSubmit={handleLogin}
+          />
+          <button onClick={() => setLoginVisible(false)}>Cancel</button>
+        </div>
       </div>
-      <div>
-        {" "}
-        password{" "}
-        <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />{" "}
-      </div>
-      <button type="submit">login</button>
-    </form>
-  );
+    );
+  };
 
   const cardForm = () => (
     <form style={styles} onSubmit={addNewCard}>
