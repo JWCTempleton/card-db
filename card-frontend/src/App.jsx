@@ -40,6 +40,8 @@ function App({ cards }) {
         username,
         password,
       });
+
+      window.localStorage.setItem("loggedCardappUser", JSON.stringify(user));
       cardService.setToken(user.token);
       setUser(user);
       setUsername("");
