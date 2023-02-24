@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import Card from "./components/Card";
 import cardService from "./services/cards";
@@ -29,6 +29,8 @@ function App({ cards }) {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
   const [loginVisible, setLoginVisible] = useState(false);
+
+  const cardFormRef = useRef();
 
   useEffect(() => {
     cardService.getAll().then((response) => {
@@ -73,6 +75,8 @@ function App({ cards }) {
       service: newCard.service,
       status: "Pending",
     };
+
+    cardFormRef.current.toggleVisibility();
 
     cardService.create(newCardObject).then((response) => {
       setCardData(cardData.concat(response));
@@ -171,7 +175,9 @@ function App({ cards }) {
               Log Out
             </button>
           </div>
-          <Togglable buttonLabel="New Card">{cardForm()}</Togglable>
+          <Togglable buttonLabel="New Card" ref={cardFormRef}>
+            {cardForm()}
+          </Togglable>
         </div>
       )}
       <div>
